@@ -1,0 +1,29 @@
+{
+  "name": "pebble-watchface",
+  "author": "Brian Mock",
+  "version": "1.0.0",
+  "keywords": ["pebble-app"],
+  "private": true,
+  "dependencies": {},
+  "capabilities": ["health"],
+  "pebble": {
+    "displayName": "pebble-watchface",
+    "uuid": "36662636-5c55-4f1a-ac1b-702c6b0d838a",
+    "sdkVersion": "3",
+    "enableMultiJS": true,
+    "targetPlatforms": [
+      "basalt",
+      "chalk",
+      "diorite"
+    ],
+    "watchapp": {
+      "watchface": true
+    },
+    "messageKeys": [
+      "dummy"
+    ],
+    "resources": {
+      "media": []
+    }
+  }
+}
