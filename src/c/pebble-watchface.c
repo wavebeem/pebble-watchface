@@ -20,24 +20,13 @@ static int month = 1;
 static int date = 1;
 static int step_count = -1;
 
-const char *EMOJI_PUCKERED = "\U0001f617";
-const char *EMOJI_SMILE = "\U0001f60a";
-
-// static bool
-// step_data_is_available() {
-//   const time_t start = time_start_of_today();
-//   const time_t end = time(NULL)
-//   return HealthServiceAccessibilityMaskAvailable &
-//     health_service_metric_accessible(HealthMetricStepCount, start, end);
-// }
-
 static void
 update_step_count() {
   step_count = (int)health_service_sum_today(HealthMetricStepCount);
 }
 
 static void
-health_handler(HealthEventType event, void *context) {
+health_handler(HealthEventType event, void *_context) {
   if (event != HealthEventSleepUpdate) {
     update_step_count();
   }
@@ -68,34 +57,25 @@ battery_handler(BatteryChargeState c) {
   safe_mark_dirty(s_canvas_layer);
 }
 
-// static void
-// draw_battery_line(GRect bounds, Layer *layer, GContext *ctx) {
-//   uint8_t percent = battery_charge.charge_percent;
-//   // TODO: Handle .is_charging
-//   // TODO: Handle .is_plugged
-//   const int x = 0;
-//   const int y = bounds.size.h - 10;
-//   const int w =(bounds.size.w * percent) / 100;
-//   const int h = 10; 
-//   GRect frame = GRect(x, y, w, h);
-//   graphics_context_set_fill_color(ctx, color_batt);
-//   graphics_fill_rect(ctx, frame, 0, GCornerNone);
-// }
-
 static void
 draw_battery_chunks(GRect bounds, Layer *layer, GContext *ctx) {
+  // TODO: Horizontally center this stuff
+  const int stroke_width = 2;
+  const int margin = 10;
   const int gap = 3;
-  const int radius = 4;
+  const int radius = 5;
   uint8_t percent = battery_charge.charge_percent;
-  const int n = percent / 10;
-  for (int i = 0; i < 10; i++) {
-    graphics_context_set_stroke_width(ctx, 2);
+  const int chunks = bounds.size.w > 144 ? 10 : 8;
+  const int percent_chunk_size = 100 / chunks;
+  const int n = percent / percent_chunk_size;
+  for (int i = 0; i < chunks; i++) {
+    graphics_context_set_stroke_width(ctx, stroke_width);
     graphics_context_set_stroke_color(ctx, color_batt);
     graphics_context_set_fill_color(ctx, color_batt);
-    const GPoint point = {
-      radius + 2 * (radius + gap) * i,
-      bounds.size.h - 10
-    };
+    const GPoint point = GPoint(
+      margin + radius + 2 * (radius + gap) * i,
+      bounds.size.h - margin
+    );
     if (i <= n) {
       graphics_draw_circle(ctx, point, radius);
       graphics_fill_circle(ctx, point, radius);
@@ -108,6 +88,7 @@ draw_battery_chunks(GRect bounds, Layer *layer, GContext *ctx) {
 static void
 draw_time(GRect bounds, Layer *layer, GContext *ctx) {
   GRect frame = GRect(0, 50, bounds.size.w, 50);
+  GRect frame2 = GRect(0, 48, bounds.size.w, 50);
   char str[255];
   snprintf(str, sizeof str, "%02d:%02d", hours, minutes);
   GColor text_color = gcolor_legible_over(color_time);
@@ -118,8 +99,9 @@ draw_time(GRect bounds, Layer *layer, GContext *ctx) {
     ctx,
     str,
     fonts_get_system_font(FONT_KEY_LECO_42_NUMBERS),
+    // fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD),
     // fonts_get_system_font(FONT_KEY_ROBOTO_BOLD_SUBSET_49),
-    frame,
+    frame2,
     GTextOverflowModeTrailingEllipsis,
     GTextAlignmentCenter,
     NULL
@@ -149,9 +131,7 @@ draw_steps(GRect bounds, Layer *layer, GContext *ctx) {
     return;
   }
   GRect frame = GRect(0, 100, bounds.size.w, 50);
-  const char *emoji = EMOJI_SMILE;
   char str[255];
-  // snprintf(str, sizeof str, "%d %s", step_count, emoji);
   snprintf(str, sizeof str, "%d", step_count);
   graphics_context_set_text_color(ctx, color_steps);
   graphics_draw_text(
@@ -225,9 +205,9 @@ static void
 init() {
   srand(time(NULL));
   color_time = GColorWhite;
-  color_date = GColorRichBrilliantLavender;
-  color_batt = GColorRajah;
-  color_steps = GColorMelon;
+  color_date = GColorRajah;
+  color_batt = GColorInchworm;
+  color_steps = GColorCeleste;
   color_bg = GColorBlack;
   init_time();
   init_battery();
