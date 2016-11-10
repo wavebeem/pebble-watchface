@@ -14,6 +14,9 @@ static GColor8 color_batt;
 static GColor8 color_steps;
 static GColor8 color_bg;
 
+static GFont s_font_secondary;
+static GFont s_font_primary;
+
 static int hours = 0;
 static int minutes = 0;
 static int month = 1;
@@ -98,9 +101,7 @@ draw_time(GRect bounds, Layer *layer, GContext *ctx) {
   graphics_draw_text(
     ctx,
     str,
-    fonts_get_system_font(FONT_KEY_LECO_42_NUMBERS),
-    // fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD),
-    // fonts_get_system_font(FONT_KEY_ROBOTO_BOLD_SUBSET_49),
+    s_font_primary,
     frame2,
     GTextOverflowModeTrailingEllipsis,
     GTextAlignmentCenter,
@@ -117,7 +118,7 @@ draw_date(GRect bounds, Layer *layer, GContext *ctx) {
   graphics_draw_text(
     ctx,
     str,
-    fonts_get_system_font(FONT_KEY_LECO_32_BOLD_NUMBERS),
+    s_font_secondary,
     frame,
     GTextOverflowModeTrailingEllipsis,
     GTextAlignmentCenter,
@@ -137,7 +138,7 @@ draw_steps(GRect bounds, Layer *layer, GContext *ctx) {
   graphics_draw_text(
     ctx,
     str,
-    fonts_get_system_font(FONT_KEY_LECO_32_BOLD_NUMBERS),
+    s_font_secondary,
     frame,
     GTextOverflowModeTrailingEllipsis,
     GTextAlignmentCenter,
@@ -202,13 +203,24 @@ init_battery() {
 }
 
 static void
-init() {
-  srand(time(NULL));
+init_colors() {
   color_time = GColorWhite;
   color_date = GColorRajah;
   color_batt = GColorInchworm;
   color_steps = GColorCeleste;
   color_bg = GColorBlack;
+}
+
+static void
+init_fonts() {
+  s_font_secondary = fonts_get_system_font(FONT_KEY_LECO_32_BOLD_NUMBERS);
+  s_font_primary = fonts_get_system_font(FONT_KEY_LECO_42_NUMBERS);
+}
+
+static void
+init() {
+  init_fonts();
+  init_colors();
   init_time();
   init_battery();
   init_steps();
