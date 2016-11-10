@@ -3,7 +3,6 @@
 
 void
 draw_battery(Layer *layer, GContext *ctx) {
-  graphics_context_set_antialiased(ctx, true);
   GRect bounds = layer_get_bounds(layer);
   // TODO: Horizontally center this stuff
   const int stroke_width = 2;
@@ -71,11 +70,10 @@ draw_date(Layer *layer, GContext *ctx) {
 void
 draw_steps(Layer *layer, GContext *ctx) {
   GRect bounds = layer_get_bounds(layer);
-  if (STATE.steps == -1) {
-    return;
+  char str[255] = "-";
+  if (STATE.steps >= 0) {
+    snprintf(str, sizeof str, "%d", STATE.steps);
   }
-  char str[255];
-  snprintf(str, sizeof str, "%d", STATE.steps);
   graphics_context_set_text_color(ctx, STATE.color_steps);
   graphics_draw_text(
     ctx,
