@@ -1,29 +1,28 @@
 {
-  "name": "pebble-watchface",
-  "author": "Brian Mock",
-  "version": "1.0.0",
-  "keywords": ["pebble-app"],
-  "private": true,
-  "dependencies": {},
-  "capabilities": ["health"],
-  "pebble": {
-    "displayName": "pebble-watchface",
-    "uuid": "36662636-5c55-4f1a-ac1b-702c6b0d838a",
-    "sdkVersion": "3",
-    "enableMultiJS": true,
-    "targetPlatforms": [
-      "basalt",
-      "diorite",
-      "emery"
+    "author": "Brian Mock",
+    "dependencies": {},
+    "keywords": [
+        "pebble-app"
     ],
-    "watchapp": {
-      "watchface": true
+    "name": "pebble-watchface",
+    "pebble": {
+        "displayName": "pebble-watchface",
+        "enableMultiJS": true,
+        "messageKeys": [],
+        "projectType": "native",
+        "resources": {
+            "media": []
+        },
+        "sdkVersion": "3",
+        "targetPlatforms": [
+            "basalt",
+            "diorite",
+            "emery"
+        ],
+        "uuid": "36662636-5c55-4f1a-ac1b-702c6b0d838a",
+        "watchapp": {
+            "watchface": true
+        }
     },
-    "messageKeys": [
-      "dummy"
-    ],
-    "resources": {
-      "media": []
-    }
-  }
+    "version": "1.0.0"
 }

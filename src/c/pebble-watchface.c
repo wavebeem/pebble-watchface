@@ -55,21 +55,23 @@ window_load(Window *window) {
   s_window_layer = window_get_root_layer(window);
   GRect window_bounds = layer_get_bounds(s_window_layer);
   const int window_w = window_bounds.size.w;
-  // const int window_h = window_bounds.size.h;
+  const int window_h = window_bounds.size.h;
+  
+  const int size = window_h / 12;
 
-  s_layer_date = layer_create(GRect(0, 0, window_w, 40));
+  s_layer_date = layer_create(GRect(0, 0, window_w, 3 * size));
   layer_set_update_proc(s_layer_date, draw_date);
   layer_add_child(s_window_layer, s_layer_date);
 
-  s_layer_time = layer_create(GRect(0, 40, window_w, 60));
+  s_layer_time = layer_create(GRect(0, 3 * size, window_w, 4 * size));
   layer_set_update_proc(s_layer_time, draw_time);
   layer_add_child(s_window_layer, s_layer_time);
 
-  s_layer_steps = layer_create(GRect(0, 100, window_w, 40));
+  s_layer_steps = layer_create(GRect(0, 7 * size, window_w, 3 * size));
   layer_set_update_proc(s_layer_steps, draw_steps);
   layer_add_child(s_window_layer, s_layer_steps);
 
-  s_layer_battery = layer_create(GRect(0, 120, window_w, 40));
+  s_layer_battery = layer_create(GRect(0, 10 * size, window_w, window_h - (10 * size)));
   layer_set_update_proc(s_layer_battery, draw_battery);
   layer_add_child(s_window_layer, s_layer_battery);
 }
