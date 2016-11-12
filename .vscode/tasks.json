@@ -5,5 +5,5 @@
   "command": "./run.sh",
   "isShellCommand": true,
   "args": [],
-  "showOutput": "never"
+  "showOutput": "always"
 }
