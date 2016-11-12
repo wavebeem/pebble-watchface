@@ -1,6 +1,8 @@
 {
     "author": "Brian Mock",
-    "dependencies": {},
+    "dependencies": {
+        "pebble-fctx": "^1.6.1"
+    },
     "keywords": [
         "pebble-app"
     ],
@@ -11,7 +13,14 @@
         "messageKeys": [],
         "projectType": "native",
         "resources": {
-            "media": []
+            "media": [
+                {
+                    "file": "data/NotoSansUI.ffont",
+                    "name": "NOTO_SANS_REGULAR_FFONT",
+                    "targetPlatforms": null,
+                    "type": "raw"
+                }
+            ]
         },
         "sdkVersion": "3",
         "targetPlatforms": [

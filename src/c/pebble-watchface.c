@@ -1,17 +1,20 @@
 #include <pebble.h>
+#include <pebble-fctx/fctx.h>
+#include <pebble-fctx/ffont.h>
 #include "state.h"
 #include "draw.h"
 
 // TODO: Switch to TextLayers rather than drawing text manually.
 // https://developer.pebble.com/docs/c/User_Interface/Layers/TextLayer/
 
-static Window *s_main_window = 0;
+// Convert TTF font to fctx FFont:
+// - Use TTF to SVG font converter
+// - ./node_modules/.bin/fctx-compiler <YOUR_FONT>.svg -r "[0-9:./ -]"
 
-static Layer *s_window_layer = 0;
-static Layer *s_layer_time = 0;
-static Layer *s_layer_date = 0;
-static Layer *s_layer_steps = 0;
-static Layer *s_layer_battery = 0;
+static Window *s_main_window = NULL;
+
+static Layer *s_layer_main = NULL;
+static Layer *s_window_layer = NULL;
 
 static void
 update_step_count() {
@@ -53,35 +56,15 @@ battery_handler(BatteryChargeState c) {
 static void
 window_load(Window *window) {
   s_window_layer = window_get_root_layer(window);
-  GRect window_bounds = layer_get_bounds(s_window_layer);
-  const int window_w = window_bounds.size.w;
-  const int window_h = window_bounds.size.h;
-  
-  const int size = window_h / 12;
-
-  s_layer_date = layer_create(GRect(0, 0, window_w, 3 * size));
-  layer_set_update_proc(s_layer_date, draw_date);
-  layer_add_child(s_window_layer, s_layer_date);
-
-  s_layer_time = layer_create(GRect(0, 3 * size, window_w, 4 * size));
-  layer_set_update_proc(s_layer_time, draw_time);
-  layer_add_child(s_window_layer, s_layer_time);
-
-  s_layer_steps = layer_create(GRect(0, 7 * size, window_w, 3 * size));
-  layer_set_update_proc(s_layer_steps, draw_steps);
-  layer_add_child(s_window_layer, s_layer_steps);
-
-  s_layer_battery = layer_create(GRect(0, 10 * size, window_w, window_h - (10 * size)));
-  layer_set_update_proc(s_layer_battery, draw_battery);
-  layer_add_child(s_window_layer, s_layer_battery);
+  GRect bounds = layer_get_bounds(s_window_layer);
+  s_layer_main = layer_create(bounds);
+  layer_set_update_proc(s_layer_main, draw_main);
+  layer_add_child(s_window_layer, s_layer_main);
 }
 
 static void
 window_unload(Window *window) {
-  layer_destroy(s_layer_time);
-  layer_destroy(s_layer_date);
-  layer_destroy(s_layer_steps);
-  layer_destroy(s_layer_battery);
+  layer_destroy(s_layer_main);
 }
 
 static WindowHandlers window_handlers = {
@@ -100,7 +83,7 @@ init_time() {
 static void
 init_window() {
   s_main_window = window_create();
-  window_set_background_color(s_main_window, STATE.color_bg);
+  window_set_background_color(s_main_window, GColorBlack);
   window_set_window_handlers(s_main_window, window_handlers);
   window_stack_push(s_main_window, true);
 }
@@ -117,18 +100,8 @@ init_battery() {
 }
 
 static void
-init_colors() {
-  STATE.color_time = GColorWhite;
-  STATE.color_date = GColorRajah;
-  STATE.color_batt = GColorInchworm;
-  STATE.color_steps = GColorRajah;
-  STATE.color_bg = GColorBlack;
-}
-
-static void
 init_fonts() {
-  STATE.font_secondary = fonts_get_system_font(FONT_KEY_LECO_32_BOLD_NUMBERS);
-  STATE.font_primary = fonts_get_system_font(FONT_KEY_LECO_42_NUMBERS);
+  STATE.font_noto_sans = ffont_create_from_resource(RESOURCE_ID_NOTO_SANS_REGULAR_FFONT);
 }
 
 static void
@@ -139,7 +112,6 @@ init() {
   STATE.date = 1;
   STATE.steps = -1;
   init_fonts();
-  init_colors();
   init_time();
   init_battery();
   init_steps();
