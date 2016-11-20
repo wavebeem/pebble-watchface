@@ -15,7 +15,7 @@
         "resources": {
             "media": [
                 {
-                    "file": "data/NotoSansUI.ffont",
+                    "file": "NotoSansUI.ffont",
                     "name": "NOTO_SANS_REGULAR_FFONT",
                     "targetPlatforms": null,
                     "type": "raw"

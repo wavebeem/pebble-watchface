@@ -10,6 +10,7 @@ typedef struct {
   int steps;
   uint8_t battery_percent;
   FFont *font_noto_sans;
+  GFont gfont_gothic;
 } State;
 
 extern State STATE;
