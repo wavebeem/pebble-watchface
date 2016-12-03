@@ -6,11 +6,21 @@
 
 // TODO: Do something interesting when a "Quick View" is on screen
 
+#define ALT_STYLE DRAW_FG
+// #define ALT_COLOR GColorRajah
+// #define ALT_COLOR GColorInchworm
+// #define ALT_COLOR GColorCeleste
+// #define ALT_COLOR GColorCeleste
+#define ALT_COLOR GColorWhite
+
+// #define ALT_STYLE DRAW_BG
+// #define ALT_COLOR GColorMidnightGreen
+
 // Apparently 12-hour time is still incredibly popular (.-.)
 static int
 preferred_hours(int hours) {
   int ret = hours;
-  if (clock_is_24h_style()) {
+  if (!clock_is_24h_style()) {
     ret %= 12;
     if (ret == 0) {
       ret = 12;
@@ -19,22 +29,31 @@ preferred_hours(int hours) {
   return ret;
 }
 
+typedef enum {
+  DRAW_BG,
+  DRAW_FG
+} Style;
+
 static void
 draw_string(
   GContext *gctx,
   FContext *fctx,
+  Style style,
   GRect bounds,
-  GColor bg_color,
+  GColor color,
   int font_size,
   const char* text
 ) {
-  // Draw the background <(^_^ <)
-  // graphics_context_set_fill_color(gctx, bg_color);
-  // graphics_fill_rect(gctx, bounds, 0, GCornerNone);
+  if (style == DRAW_BG) {
+    // Draw the background <(^_^ <)
+    graphics_context_set_fill_color(gctx, color);
+    graphics_fill_rect(gctx, bounds, 0, GCornerNone);
+  }
 
   // Draw the text (-_-;)
-  // GColor fg_color = gcolor_legible_over(bg_color);
-  GColor fg_color = bg_color;
+  GColor fg_color = style == DRAW_BG
+    ? gcolor_legible_over(color)
+    : color;
   // FFont *font = STATE.font_noto_sans_regular;
   FFont *font = STATE.font_noto_sans_bold;
   fctx_set_text_cap_height(fctx, font, font_size);
@@ -64,6 +83,7 @@ draw_time(GContext *gctx, FContext *fctx, int font_size, GRect bounds) {
   draw_string(
     gctx,
     fctx,
+    DRAW_BG,
     bounds,
     GColorWhite,
     font_size,
@@ -84,8 +104,9 @@ draw_date(GContext *gctx, FContext *fctx, int font_size, GRect bounds) {
   draw_string(
     gctx,
     fctx,
+    ALT_STYLE,
     bounds,
-    GColorMintGreen,
+    ALT_COLOR,
     font_size,
     str
   );
@@ -105,8 +126,9 @@ draw_step(GContext *gctx, FContext *fctx, int font_size, GRect bounds) {
   draw_string(
     gctx,
     fctx,
+    ALT_STYLE,
     bounds,
-    GColorMintGreen,
+    ALT_COLOR,
     font_size,
     str
   );
