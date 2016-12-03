@@ -99,8 +99,10 @@ init_battery() {
 
 static void
 init_fonts() {
-  STATE.font_noto_sans =
+  STATE.font_noto_sans_regular =
     ffont_create_from_resource(RESOURCE_ID_NOTO_SANS_REGULAR_FFONT);
+  STATE.font_noto_sans_bold =
+    ffont_create_from_resource(RESOURCE_ID_NOTO_SANS_BOLD_FFONT);
 }
 
 static void
