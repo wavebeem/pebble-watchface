@@ -98,9 +98,9 @@ draw_step(GContext *gctx, FContext *fctx, int font_size, GRect bounds) {
     str,
     sizeof str,
     "%d",
-    // STATE.steps
+    STATE.steps
     // 28065
-    8065
+    // 8065
   );
   draw_string(
     gctx,
