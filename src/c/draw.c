@@ -6,17 +6,7 @@
 
 // TODO: Do something interesting when a "Quick View" is on screen
 
-#define ALT_STYLE DRAW_FG
-// #define ALT_COLOR GColorRajah
-// #define ALT_COLOR GColorInchworm
-// #define ALT_COLOR GColorCeleste
-// #define ALT_COLOR GColorCeleste
-// #define ALT_COLOR GColorWhite
-
-// #define ALT_STYLE DRAW_BG
-// #define ALT_COLOR GColorMidnightGreen
-
-#define BORDER_RADIUS 4
+#define BORDER_RADIUS 8
 
 static GColor
 current_color() {
