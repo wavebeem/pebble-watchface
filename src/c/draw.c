@@ -7,10 +7,12 @@
 // TODO: Do something interesting when a "Quick View" is on screen
 
 #define BORDER_RADIUS 8
+#define BG_INSET_SIZE 4
+#define LOW_BATTERY_PERCENT 30
 
 static GColor
 current_color() {
-  if (STATE.battery_percent <= 30) {
+  if (STATE.battery_percent <= LOW_BATTERY_PERCENT) {
     return GColorSunsetOrange;
   }
   else {
@@ -47,9 +49,10 @@ draw_string(
   const char* text
 ) {
   if (style == DRAW_BG) {
+    GRect bg_bounds = grect_inset(bounds, GEdgeInsets(BG_INSET_SIZE, 0));
     // Draw the background <(^_^ <)
     graphics_context_set_fill_color(gctx, color);
-    graphics_fill_rect(gctx, bounds, BORDER_RADIUS, GCornersAll);
+    graphics_fill_rect(gctx, bg_bounds, BORDER_RADIUS, GCornersAll);
   }
 
   // Draw the text (-_-;)
