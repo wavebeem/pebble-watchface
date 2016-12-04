@@ -5,6 +5,7 @@
 typedef struct {
   int hours;
   int minutes;
+  int seconds;
   int month;
   int date;
   int steps;

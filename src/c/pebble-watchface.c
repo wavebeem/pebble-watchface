@@ -34,12 +34,13 @@ safe_mark_dirty(Layer *l) {
 }
 
 static void
-tick_handler(struct tm *tick_time, TimeUnits _changed) {
-  STATE.hours = tick_time->tm_hour;
-  STATE.minutes = tick_time->tm_min;
-  STATE.date = tick_time->tm_mday;
-  STATE.month = tick_time->tm_mon + 1;
-  if (STATE.minutes == 0) {
+tick_handler(struct tm *tick, TimeUnits _changed) {
+  STATE.hours = tick->tm_hour;
+  STATE.minutes = tick->tm_min;
+  STATE.date = tick->tm_mday;
+  STATE.month = tick->tm_mon + 1;
+  STATE.seconds = tick->tm_sec;
+  if (STATE.minutes == 0 && STATE.seconds == 0) {
     vibes_short_pulse();
   }
   safe_mark_dirty(s_window_layer);
