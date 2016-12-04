@@ -11,10 +11,22 @@
 // #define ALT_COLOR GColorInchworm
 // #define ALT_COLOR GColorCeleste
 // #define ALT_COLOR GColorCeleste
-#define ALT_COLOR GColorWhite
+// #define ALT_COLOR GColorWhite
 
 // #define ALT_STYLE DRAW_BG
 // #define ALT_COLOR GColorMidnightGreen
+
+#define BORDER_RADIUS 4
+
+static GColor
+current_color() {
+  if (STATE.battery_percent <= 30) {
+    return GColorRajah;
+  }
+  else {
+    return GColorWhite;
+  }
+}
 
 // Apparently 12-hour time is still incredibly popular (.-.)
 static int
@@ -47,7 +59,7 @@ draw_string(
   if (style == DRAW_BG) {
     // Draw the background <(^_^ <)
     graphics_context_set_fill_color(gctx, color);
-    graphics_fill_rect(gctx, bounds, 0, GCornerNone);
+    graphics_fill_rect(gctx, bounds, BORDER_RADIUS, GCornersAll);
   }
 
   // Draw the text (-_-;)
@@ -85,7 +97,7 @@ draw_time(GContext *gctx, FContext *fctx, int font_size, GRect bounds) {
     fctx,
     DRAW_BG,
     bounds,
-    GColorWhite,
+    current_color(),
     font_size,
     str
   );
@@ -104,9 +116,9 @@ draw_date(GContext *gctx, FContext *fctx, int font_size, GRect bounds) {
   draw_string(
     gctx,
     fctx,
-    ALT_STYLE,
+    DRAW_FG,
     bounds,
-    ALT_COLOR,
+    current_color(),
     font_size,
     str
   );
@@ -114,6 +126,9 @@ draw_date(GContext *gctx, FContext *fctx, int font_size, GRect bounds) {
 
 static void
 draw_step(GContext *gctx, FContext *fctx, int font_size, GRect bounds) {
+  if (STATE.steps == -1) {
+    return;
+  }
   char str[255];
   snprintf(
     str,
@@ -126,9 +141,9 @@ draw_step(GContext *gctx, FContext *fctx, int font_size, GRect bounds) {
   draw_string(
     gctx,
     fctx,
-    ALT_STYLE,
+    DRAW_FG,
     bounds,
-    ALT_COLOR,
+    current_color(),
     font_size,
     str
   );
@@ -166,7 +181,7 @@ draw_main(Layer *layer, GContext *ctx) {
   GRect bounds = layer_get_bounds(layer);
   AllBounds all = bounds_calc(bounds);
   draw_date(ctx, &fctx, 32, all.top);
-  draw_time(ctx, &fctx, 38, all.middle);
+  draw_time(ctx, &fctx, 36, all.middle);
   draw_step(ctx, &fctx, 32, all.bottom);
   fctx_deinit_context(&fctx);
 }
