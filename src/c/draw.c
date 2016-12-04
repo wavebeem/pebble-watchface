@@ -21,7 +21,7 @@
 static GColor
 current_color() {
   if (STATE.battery_percent <= 30) {
-    return GColorRajah;
+    return GColorSunsetOrange;
   }
   else {
     return GColorWhite;
