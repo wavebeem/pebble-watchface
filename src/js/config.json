@@ -1,0 +1,35 @@
+[
+  {
+    "type": "heading",
+    "defaultValue": "Time Capsule"
+  },
+  {
+    "type": "text",
+    "defaultValue": "Configuration for Time Capsule."
+  },
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "radiogroup",
+        "messageKey": "DateFormat",
+        "label": "Date format",
+        "defaultValue": 0,
+        "options": [
+          {"label": "MM/DD", "value": 0},
+          {"label": "DD/MM", "value": 1}
+        ]
+      },
+      {
+        "type": "toggle",
+        "messageKey": "VibrateHourly",
+        "label": "Vibrate hourly",
+        "defaultValue": true
+      },
+      {
+        "type": "submit",
+        "defaultValue": "Save"
+      }
+    ]
+  }
+]

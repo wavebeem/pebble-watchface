@@ -1,6 +1,10 @@
 #include <pebble.h>
 #include <pebble-fctx/fctx.h>
 #include <pebble-fctx/ffont.h>
+
+#include <pebble-events/pebble-events.h>
+#include "enamel.h"
+
 #include "state.h"
 #include "draw.h"
 
@@ -48,7 +52,7 @@ tick_handler(struct tm *tick, TimeUnits _changed) {
   STATE.date = tick->tm_mday;
   STATE.seconds = tick->tm_sec;
 #endif
-  if (STATE.minutes == 0 && STATE.seconds == 0) {
+  if (STATE.minutes == 0 && STATE.seconds == 0 && should_vibrate_hourly()) {
     vibes_short_pulse();
   }
   safe_mark_dirty(s_window_layer);
@@ -118,6 +122,8 @@ init_fonts() {
 
 static void
 init() {
+  enamel_init();
+  events_app_message_open();
   init_fonts();
   init_time();
   init_battery();
@@ -128,6 +134,7 @@ init() {
 static void
 deinit() {
   window_destroy(s_main_window);
+  enamel_deinit();
 }
 
 int

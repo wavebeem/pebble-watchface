@@ -22,12 +22,13 @@
 
 static GColor
 current_color() {
-  if (STATE.battery_percent <= LOW_BATTERY_PERCENT) {
-    return GColorSunsetOrange;
-  }
-  else {
-    return GColorWhite;
-  }
+  // if (should_vibrate_hourly()) return GColorRed;
+  // if (is_date_format_MMDD()) return GColorYellow;
+
+  if (STATE.battery_percent <= 20) return GColorSunsetOrange;
+  if (STATE.battery_percent <= 30) return GColorYellow;
+  if (STATE.battery_percent <= 90) return GColorWhite;
+  return GColorInchworm;
 }
 
 // Apparently 12-hour time is still incredibly popular (.-.)
@@ -113,8 +114,8 @@ draw_date(GContext *gctx, FContext *fctx, int font_size, GRect bounds) {
     str,
     sizeof str,
     "%02d/%02d",
-    STATE.month,
-    STATE.date
+    is_date_format_MMDD() ? STATE.month : STATE.date,
+    is_date_format_MMDD() ? STATE.date : STATE.month
   );
   draw_string(
     gctx,

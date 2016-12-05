@@ -1,6 +1,11 @@
 #pragma once
+
 #include <pebble.h>
 #include <pebble-fctx/fctx.h>
+
+#include <pebble-events/pebble-events.h>
+#include "enamel.h"
+
 
 typedef struct {
   int hours;
@@ -13,5 +18,8 @@ typedef struct {
   FFont *font_noto_sans_regular;
   FFont *font_noto_sans_bold;
 } State;
+
+bool should_vibrate_hourly();
+bool is_date_format_MMDD();
 
 extern State STATE;

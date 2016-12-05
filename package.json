@@ -1,39 +1,45 @@
 {
-    "author": "Brian Mock",
-    "dependencies": {
-        "pebble-fctx": "^1.6.1"
-    },
-    "keywords": [
-        "pebble-app"
+  "author": "Brian Mock",
+  "dependencies": {
+    "enamel": "^1.2.5",
+    "pebble-clay": "^1.0.4",
+    "pebble-fctx": "^1.6.1"
+  },
+  "keywords": [
+    "pebble-app"
+  ],
+  "name": "time-capsule",
+  "pebble": {
+    "displayName": "Time Capsule",
+    "enableMultiJS": true,
+    "messageKeys": [
+      "DateFormat",
+      "VibrateHourly"
     ],
-    "name": "time-capsule",
-    "pebble": {
-        "displayName": "Time Capsule",
-        "enableMultiJS": true,
-        "messageKeys": [],
-        "projectType": "native",
-        "resources": {
-            "media": [
-                {
-                    "file": "NotoSansUI-Bold.ffont",
-                    "name": "NOTO_SANS_BOLD_FFONT",
-                    "targetPlatforms": null,
-                    "type": "raw"
-                }
-            ]
-        },
-        "sdkVersion": "3",
-        "targetPlatforms": [
-            "basalt",
-            "emery"
-        ],
-        "capabilities": [
-            "health"
-        ],
-        "uuid": "36662636-5c55-4f1a-ac1b-702c6b0d838a",
-        "watchapp": {
-            "watchface": true
+    "projectType": "native",
+    "resources": {
+      "media": [
+        {
+          "file": "NotoSansUI-Bold.ffont",
+          "name": "NOTO_SANS_BOLD_FFONT",
+          "targetPlatforms": null,
+          "type": "raw"
         }
+      ]
     },
-    "version": "1.0.0"
+    "sdkVersion": "3",
+    "targetPlatforms": [
+      "basalt",
+      "emery"
+    ],
+    "capabilities": [
+      "health",
+      "configurable"
+    ],
+    "uuid": "36662636-5c55-4f1a-ac1b-702c6b0d838a",
+    "watchapp": {
+      "watchface": true
+    }
+  },
+  "version": "1.0.0"
 }
