@@ -10,6 +10,16 @@
 #define BG_INSET_SIZE 4
 #define LOW_BATTERY_PERCENT 30
 
+// Pebble Time 2
+#if PBL_DISPLAY_HEIGHT == 228
+  #define FONT_SIZE_PRIMARY 52
+  #define FONT_SIZE_SECONDARY 48
+// Regular sized Pebble
+#else
+  #define FONT_SIZE_PRIMARY 36
+  #define FONT_SIZE_SECONDARY 32
+#endif
+
 static GColor
 current_color() {
   if (STATE.battery_percent <= LOW_BATTERY_PERCENT) {
@@ -123,14 +133,17 @@ draw_step(GContext *gctx, FContext *fctx, int font_size, GRect bounds) {
     return;
   }
   char str[255];
-  snprintf(
-    str,
-    sizeof str,
-    "%d",
-    STATE.steps
-    // 28065
-    // 8065
-  );
+  if (STATE.steps <= 99999) {
+    snprintf(
+      str,
+      sizeof str,
+      "%d",
+      STATE.steps
+    );
+  }
+  else {
+    snprintf(str, sizeof str, "...");
+  }
   draw_string(
     gctx,
     fctx,
@@ -173,8 +186,8 @@ draw_main(Layer *layer, GContext *ctx) {
   fctx_set_color_bias(&fctx, 0);
   GRect bounds = layer_get_bounds(layer);
   AllBounds all = bounds_calc(bounds);
-  draw_date(ctx, &fctx, 32, all.top);
-  draw_time(ctx, &fctx, 36, all.middle);
-  draw_step(ctx, &fctx, 32, all.bottom);
+  draw_date(ctx, &fctx, FONT_SIZE_SECONDARY, all.top);
+  draw_time(ctx, &fctx, FONT_SIZE_PRIMARY, all.middle);
+  draw_step(ctx, &fctx, FONT_SIZE_SECONDARY, all.bottom);
   fctx_deinit_context(&fctx);
 }

@@ -17,6 +17,7 @@ static Layer *s_window_layer = NULL;
 static void
 update_step_count() {
   STATE.steps = (int)health_service_sum_today(HealthMetricStepCount);
+  // STATE.steps = 808908;
 }
 
 static void
@@ -89,30 +90,27 @@ init_window() {
 
 static void
 init_steps() {
+  STATE.steps = (int)health_service_sum_today(HealthMetricStepCount);
   health_service_events_subscribe(health_handler, NULL);
 }
 
 static void
 init_battery() {
-  STATE.battery_percent = battery_state_service_peek().charge_percent;
+  // STATE.battery_percent = battery_state_service_peek().charge_percent;
+  STATE.battery_percent = 30;
   battery_state_service_subscribe(battery_handler);
 }
 
 static void
 init_fonts() {
-  STATE.font_noto_sans_regular =
-    ffont_create_from_resource(RESOURCE_ID_NOTO_SANS_REGULAR_FFONT);
+  // STATE.font_noto_sans_regular =
+  //   ffont_create_from_resource(RESOURCE_ID_NOTO_SANS_REGULAR_FFONT);
   STATE.font_noto_sans_bold =
     ffont_create_from_resource(RESOURCE_ID_NOTO_SANS_BOLD_FFONT);
 }
 
 static void
 init() {
-  STATE.hours = 0;
-  STATE.minutes = 0;
-  STATE.month = 1;
-  STATE.date = 1;
-  STATE.steps = -1;
   init_fonts();
   init_time();
   init_battery();

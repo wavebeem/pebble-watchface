@@ -6,20 +6,14 @@
     "keywords": [
         "pebble-app"
     ],
-    "name": "pebble-watchface",
+    "name": "3-up",
     "pebble": {
-        "displayName": "pebble-watchface",
+        "displayName": "3-Up",
         "enableMultiJS": true,
         "messageKeys": [],
         "projectType": "native",
         "resources": {
             "media": [
-                {
-                    "file": "NotoSansUI-Regular.ffont",
-                    "name": "NOTO_SANS_REGULAR_FFONT",
-                    "targetPlatforms": null,
-                    "type": "raw"
-                },
                 {
                     "file": "NotoSansUI-Bold.ffont",
                     "name": "NOTO_SANS_BOLD_FFONT",
