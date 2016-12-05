@@ -27,6 +27,9 @@
             "basalt",
             "emery"
         ],
+        "capabilities": [
+            "health"
+        ],
         "uuid": "36662636-5c55-4f1a-ac1b-702c6b0d838a",
         "watchapp": {
             "watchface": true

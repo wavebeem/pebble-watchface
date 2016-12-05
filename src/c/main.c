@@ -13,17 +13,16 @@ static Window *s_main_window = NULL;
 static Layer *s_layer_main = NULL;
 static Layer *s_window_layer = NULL;
 
-
-static void
-update_step_count() {
-  STATE.steps = (int)health_service_sum_today(HealthMetricStepCount);
-  // STATE.steps = 808908;
-}
+// #define DISPLAY_MODE
 
 static void
 health_handler(HealthEventType event, void *_context) {
   if (event != HealthEventSleepUpdate) {
-    update_step_count();
+#ifdef DISPLAY_MODE
+    STATE.steps = 8146;
+#else
+    STATE.steps = (int)health_service_sum_today(HealthMetricStepCount);
+#endif
   }
 }
 
@@ -36,11 +35,19 @@ safe_mark_dirty(Layer *l) {
 
 static void
 tick_handler(struct tm *tick, TimeUnits _changed) {
+#ifdef DISPLAY_MODE
+  STATE.hours = 9;
+  STATE.minutes = 58;
+  STATE.month = 12;
+  STATE.date = 31;
+  STATE.seconds = 1;
+#else
   STATE.hours = tick->tm_hour;
   STATE.minutes = tick->tm_min;
-  STATE.date = tick->tm_mday;
   STATE.month = tick->tm_mon + 1;
+  STATE.date = tick->tm_mday;
   STATE.seconds = tick->tm_sec;
+#endif
   if (STATE.minutes == 0 && STATE.seconds == 0) {
     vibes_short_pulse();
   }
