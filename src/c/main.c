@@ -96,8 +96,8 @@ init_steps() {
 
 static void
 init_battery() {
-  // STATE.battery_percent = battery_state_service_peek().charge_percent;
-  STATE.battery_percent = 30;
+  STATE.battery_percent = battery_state_service_peek().charge_percent;
+  // STATE.battery_percent = 30;
   battery_state_service_subscribe(battery_handler);
 }
 

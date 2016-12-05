@@ -6,9 +6,9 @@
     "keywords": [
         "pebble-app"
     ],
-    "name": "3-up",
+    "name": "time-capsule",
     "pebble": {
-        "displayName": "3-Up",
+        "displayName": "Time Capsule",
         "enableMultiJS": true,
         "messageKeys": [],
         "projectType": "native",
@@ -25,7 +25,6 @@
         "sdkVersion": "3",
         "targetPlatforms": [
             "basalt",
-            "diorite",
             "emery"
         ],
         "uuid": "36662636-5c55-4f1a-ac1b-702c6b0d838a",
